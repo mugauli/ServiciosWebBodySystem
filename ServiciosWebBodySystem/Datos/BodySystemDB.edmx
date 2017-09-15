@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_9F97CF_BodySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="int" Nullable="false" />
+          <Property Name="IdPais" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ctStatusRegistro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Edad">
+          <Key>
+            <PropertyRef Name="IdEdad" />
+          </Key>
+          <Property Name="IdEdad" Type="tinyint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="HistoricoRegistro">
+          <Key>
+            <PropertyRef Name="IdHistorico" />
+          </Key>
+          <Property Name="IdHistorico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRegistro" Type="int" Nullable="false" />
+          <Property Name="IdMember" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="UrlComprobante" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdEstatus" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="IdPais" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Registro">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+          <Property Name="Sexo" Type="varchar" MaxLength="2" />
+          <Property Name="IdEdad" Type="tinyint" />
+          <Property Name="Empresa" Type="varchar" MaxLength="50" />
+          <Property Name="Cargo" Type="varchar" MaxLength="50" />
+          <Property Name="IdCiudad" Type="int" />
+          <Property Name="IdPais" Type="int" />
+          <Property Name="Perfil" Type="int" />
+          <Property Name="IdTipoPase" Type="int" />
+          <Property Name="NombrePase" Type="nvarchar" MaxLength="150" />
+          <Property Name="CostoPase" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubPErfil" Type="nchar" MaxLength="10" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="10" />
+          <Property Name="UrlComprobante" Type="nvarchar" MaxLength="250" />
+          <Property Name="IdEstatus" Type="smallint" />
+        </EntityType>
+        <EntityType Name="RegistroEventos">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+            <PropertyRef Name="IdEvento" />
+          </Key>
+          <Property Name="IdRegistro" Type="int" Nullable="false" />
+          <Property Name="IdEvento" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiciosInteres">
+          <Key>
+            <PropertyRef Name="IdServiciosInteres" />
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdServiciosInteres" Type="int" Nullable="false" />
+          <Property Name="IdRegistro" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HistoricoRegistro_ctStatusRegistro">
+          <End Role="ctStatusRegistro" Type="Self.ctStatusRegistro" Multiplicity="1" />
+          <End Role="HistoricoRegistro" Type="Self.HistoricoRegistro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctStatusRegistro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoricoRegistro">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricoRegistro_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="HistoricoRegistro" Type="Self.HistoricoRegistro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="HistoricoRegistro">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_ctStatusRegistro">
+          <End Role="ctStatusRegistro" Type="Self.ctStatusRegistro" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctStatusRegistro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Edad">
+          <End Role="Edad" Type="Self.Edad" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edad">
+              <PropertyRef Name="IdEdad" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdEdad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroEventos_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="RegistroEventos" Type="Self.RegistroEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="RegistroEventos">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiciosInteres_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="ServiciosInteres" Type="Self.ServiciosInteres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="ServiciosInteres">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_9F97CF_BodySystemModelStoreContainer">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ctStatusRegistro" EntityType="Self.ctStatusRegistro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Edad" EntityType="Self.Edad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoricoRegistro" EntityType="Self.HistoricoRegistro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registro" EntityType="Self.Registro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegistroEventos" EntityType="Self.RegistroEventos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiciosInteres" EntityType="Self.ServiciosInteres" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HistoricoRegistro_ctStatusRegistro" Association="Self.FK_HistoricoRegistro_ctStatusRegistro">
+            <End Role="ctStatusRegistro" EntitySet="ctStatusRegistro" />
+            <End Role="HistoricoRegistro" EntitySet="HistoricoRegistro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricoRegistro_Registro" Association="Self.FK_HistoricoRegistro_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="HistoricoRegistro" EntitySet="HistoricoRegistro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Ciudad" Association="Self.FK_Registro_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_ctStatusRegistro" Association="Self.FK_Registro_ctStatusRegistro">
+            <End Role="ctStatusRegistro" EntitySet="ctStatusRegistro" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Edad" Association="Self.FK_Registro_Edad">
+            <End Role="Edad" EntitySet="Edad" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Pais" Association="Self.FK_Registro_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroEventos_Registro" Association="Self.FK_RegistroEventos_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="RegistroEventos" EntitySet="RegistroEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiciosInteres_Registro" Association="Self.FK_ServiciosInteres_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="ServiciosInteres" EntitySet="ServiciosInteres" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_9F97CF_BodySystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ciudad">
+          <Key>
+            <PropertyRef Name="IdCiudad" />
+          </Key>
+          <Property Name="IdCiudad" Type="Int32" Nullable="false" />
+          <Property Name="IdPais" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_Registro_Ciudad" FromRole="Ciudad" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="ctStatusRegistro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="HistoricoRegistro" Relationship="Self.FK_HistoricoRegistro_ctStatusRegistro" FromRole="ctStatusRegistro" ToRole="HistoricoRegistro" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_Registro_ctStatusRegistro" FromRole="ctStatusRegistro" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="Edad">
+          <Key>
+            <PropertyRef Name="IdEdad" />
+          </Key>
+          <Property Name="IdEdad" Type="Byte" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_Registro_Edad" FromRole="Edad" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="HistoricoRegistro">
+          <Key>
+            <PropertyRef Name="IdHistorico" />
+          </Key>
+          <Property Name="IdHistorico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+          <Property Name="IdMember" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UrlComprobante" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdEstatus" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="ctStatusRegistro" Relationship="Self.FK_HistoricoRegistro_ctStatusRegistro" FromRole="HistoricoRegistro" ToRole="ctStatusRegistro" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_HistoricoRegistro_Registro" FromRole="HistoricoRegistro" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="IdPais" />
+          </Key>
+          <Property Name="IdPais" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_Registro_Pais" FromRole="Pais" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="Registro">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IdEdad" Type="Byte" />
+          <Property Name="Empresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdCiudad" Type="Int32" />
+          <Property Name="IdPais" Type="Int32" />
+          <Property Name="Perfil" Type="Int32" />
+          <Property Name="IdTipoPase" Type="Int32" />
+          <Property Name="NombrePase" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CostoPase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubPErfil" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UrlComprobante" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IdEstatus" Type="Int16" />
+          <NavigationProperty Name="Ciudad" Relationship="Self.FK_Registro_Ciudad" FromRole="Registro" ToRole="Ciudad" />
+          <NavigationProperty Name="ctStatusRegistro" Relationship="Self.FK_Registro_ctStatusRegistro" FromRole="Registro" ToRole="ctStatusRegistro" />
+          <NavigationProperty Name="Edad" Relationship="Self.FK_Registro_Edad" FromRole="Registro" ToRole="Edad" />
+          <NavigationProperty Name="HistoricoRegistro" Relationship="Self.FK_HistoricoRegistro_Registro" FromRole="Registro" ToRole="HistoricoRegistro" />
+          <NavigationProperty Name="Pais" Relationship="Self.FK_Registro_Pais" FromRole="Registro" ToRole="Pais" />
+          <NavigationProperty Name="RegistroEventos" Relationship="Self.FK_RegistroEventos_Registro" FromRole="Registro" ToRole="RegistroEventos" />
+          <NavigationProperty Name="ServiciosInteres" Relationship="Self.FK_ServiciosInteres_Registro" FromRole="Registro" ToRole="ServiciosInteres" />
+        </EntityType>
+        <EntityType Name="RegistroEventos">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+            <PropertyRef Name="IdEvento" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+          <Property Name="IdEvento" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_RegistroEventos_Registro" FromRole="RegistroEventos" ToRole="Registro" />
+        </EntityType>
+        <EntityType Name="ServiciosInteres">
+          <Key>
+            <PropertyRef Name="IdServiciosInteres" />
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdServiciosInteres" Type="Int32" Nullable="false" />
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Registro" Relationship="Self.FK_ServiciosInteres_Registro" FromRole="ServiciosInteres" ToRole="Registro" />
+        </EntityType>
+        <Association Name="FK_Registro_Ciudad">
+          <End Role="Ciudad" Type="Self.Ciudad" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ciudad">
+              <PropertyRef Name="IdCiudad" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricoRegistro_ctStatusRegistro">
+          <End Role="ctStatusRegistro" Type="Self.ctStatusRegistro" Multiplicity="1" />
+          <End Role="HistoricoRegistro" Type="Self.HistoricoRegistro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctStatusRegistro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoricoRegistro">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_ctStatusRegistro">
+          <End Role="ctStatusRegistro" Type="Self.ctStatusRegistro" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ctStatusRegistro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Edad">
+          <End Role="Edad" Type="Self.Edad" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Edad">
+              <PropertyRef Name="IdEdad" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdEdad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoricoRegistro_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="HistoricoRegistro" Type="Self.HistoricoRegistro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="HistoricoRegistro">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registro_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Registro" Type="Self.Registro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Registro">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegistroEventos_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="RegistroEventos" Type="Self.RegistroEventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="RegistroEventos">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiciosInteres_Registro">
+          <End Role="Registro" Type="Self.Registro" Multiplicity="1" />
+          <End Role="ServiciosInteres" Type="Self.ServiciosInteres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registro">
+              <PropertyRef Name="IdRegistro" />
+            </Principal>
+            <Dependent Role="ServiciosInteres">
+              <PropertyRef Name="IdRegistro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BodySystemDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ciudad" EntityType="Self.Ciudad" />
+          <EntitySet Name="ctStatusRegistro" EntityType="Self.ctStatusRegistro" />
+          <EntitySet Name="Edad" EntityType="Self.Edad" />
+          <EntitySet Name="HistoricoRegistro" EntityType="Self.HistoricoRegistro" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" />
+          <EntitySet Name="Registro" EntityType="Self.Registro" />
+          <EntitySet Name="RegistroEventos" EntityType="Self.RegistroEventos" />
+          <EntitySet Name="ServiciosInteres" EntityType="Self.ServiciosInteres" />
+          <AssociationSet Name="FK_Registro_Ciudad" Association="Self.FK_Registro_Ciudad">
+            <End Role="Ciudad" EntitySet="Ciudad" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricoRegistro_ctStatusRegistro" Association="Self.FK_HistoricoRegistro_ctStatusRegistro">
+            <End Role="ctStatusRegistro" EntitySet="ctStatusRegistro" />
+            <End Role="HistoricoRegistro" EntitySet="HistoricoRegistro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_ctStatusRegistro" Association="Self.FK_Registro_ctStatusRegistro">
+            <End Role="ctStatusRegistro" EntitySet="ctStatusRegistro" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Edad" Association="Self.FK_Registro_Edad">
+            <End Role="Edad" EntitySet="Edad" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoricoRegistro_Registro" Association="Self.FK_HistoricoRegistro_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="HistoricoRegistro" EntitySet="HistoricoRegistro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registro_Pais" Association="Self.FK_Registro_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Registro" EntitySet="Registro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegistroEventos_Registro" Association="Self.FK_RegistroEventos_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="RegistroEventos" EntitySet="RegistroEventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiciosInteres_Registro" Association="Self.FK_ServiciosInteres_Registro">
+            <End Role="Registro" EntitySet="Registro" />
+            <End Role="ServiciosInteres" EntitySet="ServiciosInteres" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_9F97CF_BodySystemModelStoreContainer" CdmEntityContainer="BodySystemDBEntities">
+          <EntitySetMapping Name="Ciudad">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.Ciudad">
+              <MappingFragment StoreEntitySet="Ciudad">
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ctStatusRegistro">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.ctStatusRegistro">
+              <MappingFragment StoreEntitySet="ctStatusRegistro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Edad">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.Edad">
+              <MappingFragment StoreEntitySet="Edad">
+                <ScalarProperty Name="IdEdad" ColumnName="IdEdad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoricoRegistro">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.HistoricoRegistro">
+              <MappingFragment StoreEntitySet="HistoricoRegistro">
+                <ScalarProperty Name="IdHistorico" ColumnName="IdHistorico" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+                <ScalarProperty Name="IdMember" ColumnName="IdMember" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="UrlComprobante" ColumnName="UrlComprobante" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.Pais">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registro">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.Registro">
+              <MappingFragment StoreEntitySet="Registro">
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="IdEdad" ColumnName="IdEdad" />
+                <ScalarProperty Name="Empresa" ColumnName="Empresa" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="IdCiudad" ColumnName="IdCiudad" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Perfil" ColumnName="Perfil" />
+                <ScalarProperty Name="IdTipoPase" ColumnName="IdTipoPase" />
+                <ScalarProperty Name="NombrePase" ColumnName="NombrePase" />
+                <ScalarProperty Name="CostoPase" ColumnName="CostoPase" />
+                <ScalarProperty Name="SubPErfil" ColumnName="SubPErfil" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="UrlComprobante" ColumnName="UrlComprobante" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistroEventos">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.RegistroEventos">
+              <MappingFragment StoreEntitySet="RegistroEventos">
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+                <ScalarProperty Name="IdEvento" ColumnName="IdEvento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiciosInteres">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.ServiciosInteres">
+              <MappingFragment StoreEntitySet="ServiciosInteres">
+                <ScalarProperty Name="IdServiciosInteres" ColumnName="IdServiciosInteres" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

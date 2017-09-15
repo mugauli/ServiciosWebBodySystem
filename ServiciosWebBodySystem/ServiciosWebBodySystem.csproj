@@ -43,10 +43,61 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="businesslogic, Version=1.0.5261.28998, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\businesslogic.dll</HintPath>
+    </Reference>
+    <Reference Include="cms, Version=1.0.5261.28999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\cms.dll</HintPath>
+    </Reference>
+    <Reference Include="controls, Version=1.0.5261.29000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\controls.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="interfaces, Version=1.0.5261.28996, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.uGoLive, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Our.Umbraco.uGoLive.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.uGoLive.47x, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Our.Umbraco.uGoLive.47x.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.uGoLive.Checks, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Our.Umbraco.uGoLive.Checks.dll</HintPath>
+    </Reference>
+    <Reference Include="QrCode, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\QrCode.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLCE4Umbraco, Version=1.0.5261.28999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\SQLCE4Umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -56,6 +107,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -63,9 +122,49 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="umbraco, Version=1.0.5261.29001, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Core, Version=1.0.5261.28997, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.DataLayer, Version=1.0.5261.28998, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.editorControls, Version=1.0.5261.29004, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.editorControls.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.MacroEngines, Version=1.0.5261.29004, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.MacroEngines.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.macroRenderings, Version=1.0.5261.29000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.macroRenderings.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.providers, Version=1.0.5261.29000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\umbraco.providers.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web.UI, Version=1.0.5261.29004, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Umbraco.Web.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <EntityDeploy Include="Datos\BodySystemDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BodySystemDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Datos\BodySystemDB.edmx.diagram">
+      <DependentUpon>BodySystemDB.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -74,10 +173,94 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Datos\BodySystemDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BodySystemDB.edmx</DependentUpon>
+      <LastGenOutput>BodySystemDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Datos\BodySystemDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BodySystemDB.edmx</DependentUpon>
+      <LastGenOutput>BodySystemDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="usercontrols\EventoDia.ascx" />
+    <Content Include="usercontrols\Menu.ascx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BodySystem.cs" />
+    <Compile Include="Datos\BodySystemDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodySystemDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\BodySystemDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\BodySystemDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BodySystemDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Ciudad.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\ctStatusRegistro.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Edad.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\HistoricoRegistro.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Pais.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Registro.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\RegistroData.cs" />
+    <Compile Include="Datos\RegistroEventos.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\ServiciosInteres.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DTO\ctStatusRegistroDTO.cs" />
+    <Compile Include="DTO\MethodResponseDTO.cs" />
+    <Compile Include="DTO\NoRegistros.cs" />
+    <Compile Include="DTO\PaseDTO.cs" />
+    <Compile Include="DTO\RegistroDTO.cs" />
+    <Compile Include="DTO\RegistroEventosDTO.cs" />
+    <Compile Include="DTO\ServiciosInteresDTO.cs" />
+    <Compile Include="Helper\EmailManagerHelper.cs" />
+    <Compile Include="Helper\QCbarManager.cs" />
+    <Compile Include="model\EventoAgenda.cs" />
+    <Compile Include="model\EventoFecha.cs" />
+    <Compile Include="model\LoginModel.cs" />
+    <Compile Include="model\RegistroViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="usercontrols\EventoDia.ascx.cs">
+      <DependentUpon>EventoDia.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usercontrols\EventoDia.ascx.designer.cs">
+      <DependentUpon>EventoDia.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="usercontrols\Menu.ascx.cs">
+      <DependentUpon>Menu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usercontrols\Menu.ascx.designer.cs">
+      <DependentUpon>Menu.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ValidacionController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
