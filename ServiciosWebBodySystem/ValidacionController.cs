@@ -226,7 +226,58 @@ namespace ServiciosWebBodySystem
                 return new JavaScriptSerializer().Serialize(new { success = true, message = "No se ha seleccionado archivo.", debug = debug });
             }
         }
-         
+
+
+        [HttpPost]
+        [Umbraco.Web.Mvc.MemberAuthorize(AllowType = "Validator")]
+        public string UploadFiles()
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    int IdFactura = Convert.ToInt32(Request.Form["IdFactura"]);
+                    var Descripcion = Request.Form["Descripcion"];
+
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+                        }
+
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath("~/Comprobantes/"), fname);
+                        file.SaveAs(fname);
+                    }
+                    // Returns message that successfully uploaded  
+                    return new JavaScriptSerializer().Serialize(new { success = true, message = "Archivo guardado con exito.", debug = debug });
+                }
+                catch (Exception ex)
+                {
+                    return new JavaScriptSerializer().Serialize(new { success = false, Message = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : string.Empty), debug = debug });
+                }
+            }
+            else
+            {
+                return new JavaScriptSerializer().Serialize(new { success = true, message = "No se ha seleccionado archivo.", debug = debug });
+            }
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using ServiciosWebBodySystem.Datos;
+using ServiciosWebBodySystem.DTO;
 using ServiciosWebBodySystem.Helper;
 using ServiciosWebBodySystem.model;
 using System;
@@ -12,9 +13,12 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using System.Xml;
+using System.Xml.Serialization;
 using umbraco.cms.businesslogic.member;
 using umbraco.NodeFactory;
 using Umbraco.Web.WebApi;
+
 
 namespace ServiciosWebBodySystem
 {
@@ -26,6 +30,118 @@ namespace ServiciosWebBodySystem
 
         // GET api/<controller>
 
+        [HttpGet]
+        public string GetBanner(string hash)
+        {
+
+
+            var response = new BannerRegistroDTO();
+            try
+            {
+                if (hash.Equals("prueba"))
+                {
+                    response.Title = @"Registro Trade Show B to B - 25 y 26  de Octubre";
+                    response.Contenido = @"<p>Si eres Dueño, Director, Gerente u Operador de un Club, Gimnasio o Instalación Deportiva, éste es el evento y EXPO para ti! Aquí encontrarás todos los materiales y equipo necesario para la operación de tu espacio deportivo indoor y outdoor. Las mejores marcas Nacionales e Internacionales de la INDUSTRIA WELLNESS, exhibiendo las soluciones e innovaciones del sector. ¡Acceso Gratuito! Regístrate en Trade Show.</p>";
+                    response.Video = @"<div><iframe src='https://www.youtube.com/embed/VCHDznhezUc?ecver=2' style='position:absolute;width:100%;height:100%;left:0' width='639' height='360' frameborder='0' allowfullscreen></iframe></div>";
+                    var xml = @"<multi-url-picker>
+                                  <url-picker mode='Media'>
+                                    <new-window>False</new-window>
+                                    <node-id>1171</node-id>
+                                    <url>/media/1635/rombobosysystem.png</url>
+                                    <link-title />
+                                  </url-picker>
+                                  <url-picker mode='Media'>
+                                    <new-window>False</new-window>
+                                    <node-id>1172</node-id>
+                                    <url>/media/1636/rombocybex.png</url>
+                                    <link-title />
+                                  </url-picker>
+                                </multi-url-picker>";
+
+                    var listImg = new List<string>();
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(xml);
+
+                    XmlNodeList errorNodes = doc.DocumentElement.SelectNodes("/multi-url-picker/url-picker");
+
+                    foreach (XmlNode pointCoord in doc.SelectNodes("/multi-url-picker/url-picker"))
+                    {
+
+                        XmlNode eNode = pointCoord.SelectSingleNode("url");
+
+                        if (eNode != null)
+                        {
+                            listImg.Add(eNode.InnerText);
+                        }
+                    }
+
+                    response.ListImages = listImg;
+
+
+                }
+                else
+                {
+                    Node node = new Node(1050);
+                    //debug += node.Name;
+                    //debug += node.Children.Count;
+                    foreach (Node agen in node.Children)
+                    {
+                        //  debug += agen.Name;
+                        var value = agen.GetProperty("hash");
+                        if (value != null)
+                            if (value.Value.Equals(hash))
+                            {
+                                // debug += value.Value;
+                                response.Title = agen.Name;
+                                response.Contenido = agen.GetProperty("contenido") == null ? "No se encontró contenido." : agen.GetProperty("contenido").Value.ToString();
+                                response.Video = agen.GetProperty("urlVideo") == null ? "" : agen.GetProperty("urlVideo").Value.ToString();
+
+                                if (agen.GetProperty("galeria") != null)
+                                {
+
+
+                                    var xml = agen.GetProperty("galeria").Value;
+
+                                    //xml = xml.Replace("\u003c", "<").Replace("\u003e", ">");
+
+                                    debug += "Galeria: " + xml;
+
+                                    var listImg = new List<string>();
+                                    XmlDocument doc = new XmlDocument();
+                                    doc.LoadXml(xml);
+
+                                    XmlNodeList errorNodes = doc.DocumentElement.SelectNodes("/multi-url-picker/url-picker");
+
+                                    foreach (XmlNode pointCoord in doc.SelectNodes("/multi-url-picker/url-picker"))
+                                    {
+
+                                        XmlNode eNode = pointCoord.SelectSingleNode("url");
+
+                                        if (eNode != null)
+                                        {
+                                            listImg.Add(eNode.InnerText);
+                                        }
+                                    }
+                                    response.ListImages = listImg;
+                                }
+
+
+                                //  debug += "==|" + ( agen.GetProperty("galeria") == null ? "No galeria." : agen.GetProperty("galeria").Value.ToString()) + "|=="; 
+                            }
+                    }
+                }
+
+                return new JavaScriptSerializer().Serialize(new { success = true, debug = debug, result = response });
+
+            }
+            catch (Exception ex)
+            {
+
+                return new JavaScriptSerializer().Serialize(new { success = false, message = ex.Message, debug = debug });
+            }
+
+
+        }
 
         [HttpGet]
         [HttpPost]
