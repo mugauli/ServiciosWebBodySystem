@@ -61,6 +61,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="interfaces, Version=1.0.5261.28996, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\interfaces.dll</HintPath>
@@ -69,8 +72,21 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="Our.Umbraco.uGoLive, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -229,6 +245,7 @@
     <Compile Include="Datos\ServiciosInteres.cs">
       <DependentUpon>BodySystemDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DTO\BannerRegistroDTO.cs" />
     <Compile Include="DTO\ctStatusRegistroDTO.cs" />
     <Compile Include="DTO\MethodResponseDTO.cs" />
     <Compile Include="DTO\NoRegistros.cs" />
@@ -237,6 +254,7 @@
     <Compile Include="DTO\RegistroEventosDTO.cs" />
     <Compile Include="DTO\ServiciosInteresDTO.cs" />
     <Compile Include="Helper\EmailManagerHelper.cs" />
+    <Compile Include="Helper\ExportExcelManager.cs" />
     <Compile Include="Helper\QCbarManager.cs" />
     <Compile Include="model\EventoAgenda.cs" />
     <Compile Include="model\EventoFecha.cs" />
