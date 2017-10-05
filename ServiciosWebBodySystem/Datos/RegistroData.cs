@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 using umbraco.NodeFactory;
 
@@ -141,7 +142,17 @@ namespace ServiciosWebBodySystem.Datos
 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Registro"></param>
+        /// <param name="Nombre"></param>
+        /// <param name="ApPaterno"></param>
+        /// <param name="ApMaterno"></param>
+        /// <param name="Email"></param>
+        /// <param name="Estado"></param>
+        /// <param name="Pase"></param>
+        /// <returns></returns>
         public List<RegistroDTO> GetRegistroByfiltro(int Registro, string Nombre, string ApPaterno, string ApMaterno, string Email, int Estado, int Pase)
         {
             var registroLts = new List<Registro>();
@@ -269,15 +280,23 @@ namespace ServiciosWebBodySystem.Datos
                     IdCiudad = rg.IdCiudad,
                     IdPais = rg.IdPais,
                     Perfil = rg.Perfil,
+                    StrPerfil = GetPerfil(rg.Perfil.Value),
                     IdTipoPase = rg.IdTipoPase,
                     SubPErfil = rg.SubPErfil,
                     Email = rg.Email,
                     Fecha = rg.Fecha,
                     IdEstatus = rg.IdEstatus,
                     nombrePase = rg.NombrePase,
+                    Telefono = rg.Telefono,
+                    Costo = rg.CostoPase,
                     ServiciosInteres = MapeServiciosInteres(rg.ServiciosInteres),
                     RegistroEventos = MapeRegistroEventos(rg.RegistroEventos),
-                    ctStatusRegistro = new ctStatusRegistroDTO { Id = rg.ctStatusRegistro.Id, Descripcion = rg.ctStatusRegistro.Descripcion }
+                    ctStatusRegistro = new ctStatusRegistroDTO { Id = rg.ctStatusRegistro.Id, Descripcion = rg.ctStatusRegistro.Descripcion },
+                    Pais = new PaisDTO { IdPais = rg.Pais.IdPais, Descripcion = rg.Pais.Descripcion },
+                    Edad = new EdadDTO { IdEdad = rg.Edad.IdEdad, Descripcion = rg.Edad.Descripcion },
+                    Ciudad = (rg.Ciudad == null ? new CiudadDTO { IdCiudad = 0, Descripcion = "", IdPais = rg.Pais.IdPais } : new CiudadDTO { IdCiudad = rg.Ciudad.IdCiudad, Descripcion = rg.Ciudad.Descripcion, IdPais = rg.Ciudad.IdPais }),
+
+
                 };
 
                 response.Add(reg);
@@ -294,7 +313,8 @@ namespace ServiciosWebBodySystem.Datos
                 var reg = new ServiciosInteresDTO
                 {
                     IdServiciosInteres = rg.IdServiciosInteres,
-                    IdRegistro = rg.IdRegistro
+                    IdRegistro = rg.IdRegistro,
+                    NombreServicio = GetSeviciosInteres(rg.IdServiciosInteres)
                 };
 
                 response.Add(reg);
@@ -312,7 +332,8 @@ namespace ServiciosWebBodySystem.Datos
                 {
                     IdEvento = rg.IdEvento,
                     IdRegistro = rg.IdRegistro,
-                    Estado = rg.Estado
+                    Estado = rg.Estado,
+                    NombreEvento = GetEvento(rg.IdEvento)
                 };
 
                 response.Add(reg);
@@ -393,10 +414,116 @@ namespace ServiciosWebBodySystem.Datos
 
         }
 
+        public string GetSeviciosInteres(int Id)
+        {
+
+            switch (Id)
+            {
+                case 1:
+                    return "Accesorios";
+
+                case 2:
+                    return "Audio";
+
+                case 3:
+                    return "Capacitación";
+
+                case 4:
+                    return "Electroestimulación";
+
+                case 5:
+                    return "Franquicias";
+
+                case 6:
+                    return "Mobiliario";
+
+                case 7:
+                    return "Servicio y soporte técnico";
+
+                case 8:
+                    return "Software";
+
+                case 9:
+                    return "Superficies Deportivas";
+
+                case 10:
+                    return "Suplementos";
+
+                case 12:
+                    return "Uniformes";
+
+                case 13:
+                    return "Venta de Equipo Nuevo";
+
+                case 14:
+                    return "Venta de Equipo Seminuevo";
+
+                default:
+                    return "Otros";
 
 
 
+            }
 
 
+        }
+
+        public string GetEvento(int Id)
+        {
+            try
+            {
+                Node node = new Node(Id);
+
+                return node.Name;
+            }
+            catch (Exception ex)
+            {
+                return "Evento inactivo";
+            }
+        }
+
+        public string GetPerfil(int Id)
+        {
+
+            switch (Id)
+            {
+                case 1: return "Proveedor de la industria";
+                case 2: return "Emprendedor / Inversionista";
+                case 3: return "Director / Gerente";
+                case 4: return "Coordinador";
+                case 5: return "Entrenador / Instructor";
+                case 6: return "Usuario";
+                default: return "";
+            }
+
+        }
+
+        public string GetCadenaEventos(List<RegistroEventosDTO> eventos)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (var item in eventos)
+            {
+                
+                result.Append(item.NombreEvento);
+                result.Append(" | ");
+            }
+
+            return result.ToString();
+        }
+
+        public string GetCadenaServiciosInteres(List<ServiciosInteresDTO> ServiciosInteres)
+        {
+            StringBuilder result = new StringBuilder();
+
+            foreach (var item in ServiciosInteres)
+            {
+
+                result.Append(item.NombreServicio);
+                result.Append(" | ");
+            }
+
+            return result.ToString();
+        }
     }
 }

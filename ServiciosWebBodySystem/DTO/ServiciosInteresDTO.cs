@@ -9,5 +9,6 @@ namespace ServiciosWebBodySystem.DTO
     {
         public int IdServiciosInteres { get; set; }
         public int IdRegistro { get; set; }
+        public string NombreServicio { get; set; }
     }
 }
