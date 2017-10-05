@@ -5,34 +5,23 @@ using System.Web;
 
 namespace ServiciosWebBodySystem.DTO
 {
-    public class RegistroDTO
+    public class RegistroReportDTO
     {
         public int IdRegistro { get; set; }
         public string Nombre { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
         public string Sexo { get; set; }
-        public Nullable<byte> IdEdad { get; set; }
+        public String Edad { get; set; }
         public string Empresa { get; set; }
         public string Cargo { get; set; }
         public Nullable<int> IdCiudad { get; set; }
         public Nullable<int> IdPais { get; set; }
         public Nullable<int> Perfil { get; set; }
-        public String StrPerfil { get; set; }
         public Nullable<int> IdTipoPase { get; set; }
         public string SubPErfil { get; set; }
         public string Email { get; set; }
-        public string Telefono { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<short> IdEstatus { get; set; }
-        public string Costo { get; set; }
-
-        public virtual CiudadDTO Ciudad { get; set; }
-        public virtual PaisDTO Pais { get; set; }
-        public virtual EdadDTO Edad { get; set; }
-        public virtual List<ServiciosInteresDTO> ServiciosInteres { get; set; }
-        public virtual List<RegistroEventosDTO> RegistroEventos { get; set; }
-        public virtual ctStatusRegistroDTO ctStatusRegistro { get; set; }
-        public virtual String nombrePase { get; set; }
     }
 }

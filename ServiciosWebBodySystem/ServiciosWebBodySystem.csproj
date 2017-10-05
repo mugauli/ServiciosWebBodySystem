@@ -131,6 +131,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -172,6 +176,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="default.aspx" />
     <Content Include="packages.config" />
     <EntityDeploy Include="Datos\BodySystemDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -245,15 +250,27 @@
     <Compile Include="Datos\ServiciosInteres.cs">
       <DependentUpon>BodySystemDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="default.aspx.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default.aspx.designer.cs">
+      <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DTO\BannerRegistroDTO.cs" />
+    <Compile Include="DTO\CiudadDTO.cs" />
     <Compile Include="DTO\ctStatusRegistroDTO.cs" />
+    <Compile Include="DTO\EdadDTO.cs" />
     <Compile Include="DTO\MethodResponseDTO.cs" />
     <Compile Include="DTO\NoRegistros.cs" />
+    <Compile Include="DTO\PaisDTO.cs" />
     <Compile Include="DTO\PaseDTO.cs" />
     <Compile Include="DTO\RegistroDTO.cs" />
     <Compile Include="DTO\RegistroEventosDTO.cs" />
+    <Compile Include="DTO\RegistroReportDTO.cs" />
     <Compile Include="DTO\ServiciosInteresDTO.cs" />
     <Compile Include="Helper\EmailManagerHelper.cs" />
+    <Compile Include="Helper\ExcelCustomHelper.cs" />
     <Compile Include="Helper\ExportExcelManager.cs" />
     <Compile Include="Helper\QCbarManager.cs" />
     <Compile Include="model\EventoAgenda.cs" />

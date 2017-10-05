@@ -1,14 +1,22 @@
-﻿using ServiciosWebBodySystem.Datos;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using ServiciosWebBodySystem.Datos;
 using ServiciosWebBodySystem.DTO;
+using ServiciosWebBodySystem.Helper;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
 using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using umbraco.cms.businesslogic.member;
 using umbraco.NodeFactory;
 using Umbraco.Web.Mvc;
@@ -18,6 +26,8 @@ namespace ServiciosWebBodySystem
 
     public class ValidacionController : SurfaceController
     {
+
+        // Url: /umbraco/surface/Validacion/[Method]
         private RegistroData _registroData = new RegistroData();
         private String debug = String.Empty;
 
@@ -86,7 +96,7 @@ namespace ServiciosWebBodySystem
 
                 var member = new MemberAccessException();
 
-                var registro = _registroData.GetRegistroByfiltro(Registro.Value, Nombre, ApPaterno, ApMaterno, Email, Estado,Pase);
+                var registro = _registroData.GetRegistroByfiltro(Registro.Value, Nombre, ApPaterno, ApMaterno, Email, Estado, Pase);
 
 
                 return new JavaScriptSerializer().Serialize(new { success = true, registro = registro, count = registro.Count, debug = debug });
@@ -176,108 +186,112 @@ namespace ServiciosWebBodySystem
             }
         }
 
-        [HttpPost]
-        [Umbraco.Web.Mvc.MemberAuthorize(AllowType = "Validator")]
-        public string UploadFiles()
+
+        #region Export Excel
+
+        public System.Web.Mvc.PartialViewResult ExportWhiteListExcel(int? Registro, string Nombre, string ApPaterno, string ApMaterno, string Email, int Estado, int Pase)
         {
-            // Checking no of files injected in Request object  
-            if (Request.Files.Count > 0)
-            {
-                try
-                {
-                    //  Get all files from Request object  
-                    HttpFileCollectionBase files = Request.Files;
-                    int IdFactura = Convert.ToInt32(Request.Form["IdFactura"]);
-                    var Descripcion = Request.Form["Descripcion"];
+            Registro = Registro == null ? 0 : Registro.Value;
+            var result = _registroData.GetRegistroByfiltro(Registro.Value, Nombre, ApPaterno, ApMaterno, Email, Estado, Pase);
 
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
-                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+            var excel = createExportAudit(result);
 
-                        HttpPostedFileBase file = files[i];
-                        string fname;
+            setResponseFile(excel);
 
-                        // Checking for Internet Explorer  
-                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                        {
-                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                            fname = testfiles[testfiles.Length - 1];
-                        }
-                        else
-                        {
-                            fname = file.FileName;
-                        }
-
-                        // Get the complete folder path and store the file inside it.  
-                        fname = Path.Combine(Server.MapPath("~/Comprobantes/"), fname);
-                        file.SaveAs(fname);
-                    }
-                    // Returns message that successfully uploaded  
-                    return new JavaScriptSerializer().Serialize(new { success = true, message = "Archivo guardado con exito.", debug = debug });
-                }
-                catch (Exception ex)
-                {
-                    return new JavaScriptSerializer().Serialize(new { success = false, Message = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : string.Empty), debug = debug });
-                }
-            }
-            else
-            {
-                return new JavaScriptSerializer().Serialize(new { success = true, message = "No se ha seleccionado archivo.", debug = debug });
-            }
+            return PartialView("_ExportWhiteListExcel", result);
         }
 
 
-        [HttpPost]
-        [Umbraco.Web.Mvc.MemberAuthorize(AllowType = "Validator")]
-        public string UploadFiles()
+        private void setResponseFile(ExcelCustomHelper exH)
         {
-            // Checking no of files injected in Request object  
-            if (Request.Files.Count > 0)
-            {
-                try
-                {
-                    //  Get all files from Request object  
-                    HttpFileCollectionBase files = Request.Files;
-                    int IdFactura = Convert.ToInt32(Request.Form["IdFactura"]);
-                    var Descripcion = Request.Form["Descripcion"];
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=" + exH.Filename);
+            Response.ContentType = "application/xls";
+            //Response.ContentType = "application/x-download";
+            Response.ContentEncoding = Encoding.Default;
+            Response.Charset = "UTF-8";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
 
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
-                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
-
-                        HttpPostedFileBase file = files[i];
-                        string fname;
-
-                        // Checking for Internet Explorer  
-                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                        {
-                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                            fname = testfiles[testfiles.Length - 1];
-                        }
-                        else
-                        {
-                            fname = file.FileName;
-                        }
-
-                        // Get the complete folder path and store the file inside it.  
-                        fname = Path.Combine(Server.MapPath("~/Comprobantes/"), fname);
-                        file.SaveAs(fname);
-                    }
-                    // Returns message that successfully uploaded  
-                    return new JavaScriptSerializer().Serialize(new { success = true, message = "Archivo guardado con exito.", debug = debug });
-                }
-                catch (Exception ex)
-                {
-                    return new JavaScriptSerializer().Serialize(new { success = false, Message = ex.Message + (ex.InnerException != null ? ex.InnerException.Message : string.Empty), debug = debug });
-                }
-            }
-            else
-            {
-                return new JavaScriptSerializer().Serialize(new { success = true, message = "No se ha seleccionado archivo.", debug = debug });
-            }
+            exH.objList.RenderControl(htw);
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
         }
+        private ExcelCustomHelper createExportAudit(List<RegistroDTO> caseList)
+        {
+            var grid = new GridView();
+            var caseTable = new System.Data.DataTable("Case");
+            caseTable.Columns.Add("ID", typeof(string));
+            caseTable.Columns.Add("Nombre", typeof(string));
+            caseTable.Columns.Add("A. Paterno", typeof(string));
+            caseTable.Columns.Add("A. Materno", typeof(string));
+            caseTable.Columns.Add("Sexo", typeof(string));
+            caseTable.Columns.Add("Edad", typeof(string));
+            caseTable.Columns.Add("Email", typeof(string));
+            caseTable.Columns.Add("Telefono", typeof(string));
+
+            caseTable.Columns.Add("Empresa", typeof(string));
+            caseTable.Columns.Add("Cargo", typeof(string));
+            caseTable.Columns.Add("Ciudad", typeof(string));
+            caseTable.Columns.Add("Pais", typeof(string));
+            caseTable.Columns.Add("Perfil", typeof(string));            
+            caseTable.Columns.Add("Pase", typeof(string));            
+            caseTable.Columns.Add("Servicios de interes", typeof(string));
+            caseTable.Columns.Add("Eventos", typeof(string));
+            caseTable.Columns.Add("Costo", typeof(string));
+            caseTable.Columns.Add("Estado", typeof(string));
+
+
+            //Case 
+            //CreatedDate 
+            //  SortCode 
+            //  AccountNumber 
+            //  CustomerName 
+            //  Description 
+            //  Status 
+
+
+            foreach (var a in caseList)
+            {
+                caseTable.Rows.Add(a.IdRegistro.ToString(), a.Nombre,a.ApellidoPaterno,a.ApellidoMaterno,a.Sexo,a.Edad.Descripcion,a.Email,a.Telefono,a.Empresa,a.Cargo,a.Ciudad.Descripcion,a.Pais.Descripcion,a.StrPerfil,a.nombrePase,_registroData.GetCadenaServiciosInteres(a.ServiciosInteres),_registroData.GetCadenaEventos(a.RegistroEventos),a.Costo,a.ctStatusRegistro.Descripcion);
+            }
+
+            grid.DataSource = caseTable;
+            grid.DataBind();
+
+            // grid style
+            grid.RowStyle.Height = 25;
+            int j = 0;
+            foreach (var r in caseList)
+            {
+                for (int i = 0; i < caseTable.Columns.Count; i++)
+                {
+                    if (j == 0)
+                    {
+                        grid.HeaderRow.Cells[i].BackColor = ColorTranslator.FromHtml("#ec1C49");
+                        grid.HeaderRow.Cells[i].ForeColor = Color.White;
+                        grid.HeaderRow.Cells[i].Font.Bold = true;
+                        grid.HeaderRow.Cells[i].HorizontalAlign = HorizontalAlign.Center;
+                    }
+
+                    grid.Rows[j].Cells[i].BackColor = j % 2 == 0 ? Color.White : ColorTranslator.FromHtml("#EEEEEE");
+                    grid.Rows[j].Cells[i].ForeColor = Color.Black;
+                   
+
+                }
+
+                j++;
+            }
+
+            string filename = String.Format("Registros.xls", DateTime.Now.ToString("dd_MM_yyyy hh-mm-ss"));
+            ExcelCustomHelper ex = new ExcelCustomHelper(grid, "Registros", "Registros", filename);
+
+            return ex;
+        }
+
+        #endregion
 
     }
 }

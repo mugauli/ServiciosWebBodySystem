@@ -10,5 +10,6 @@ namespace ServiciosWebBodySystem.DTO
         public int IdRegistro { get; set; }
         public int IdEvento { get; set; }
         public bool Estado { get; set; }
+        public string NombreEvento { get; set; }
     }
 }
