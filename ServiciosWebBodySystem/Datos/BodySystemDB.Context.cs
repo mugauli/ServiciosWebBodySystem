@@ -33,5 +33,6 @@ namespace ServiciosWebBodySystem.Datos
         public virtual DbSet<Registro> Registro { get; set; }
         public virtual DbSet<RegistroEventos> RegistroEventos { get; set; }
         public virtual DbSet<ServiciosInteres> ServiciosInteres { get; set; }
+        public virtual DbSet<RegistroApp> RegistroApp { get; set; }
     }
 }

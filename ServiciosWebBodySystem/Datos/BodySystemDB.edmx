@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB_9F97CF_BodySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB_9F97CF_BodySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ciudad">
           <Key>
             <PropertyRef Name="IdCiudad" />
@@ -69,6 +69,14 @@
           <Property Name="Telefono" Type="nvarchar" MaxLength="10" />
           <Property Name="UrlComprobante" Type="nvarchar" MaxLength="250" />
           <Property Name="IdEstatus" Type="smallint" />
+        </EntityType>
+        <EntityType Name="RegistroApp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdRegistro" Type="int" Nullable="false" />
+          <Property Name="key" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="RegistroEventos">
           <Key>
@@ -190,6 +198,7 @@
           <EntitySet Name="HistoricoRegistro" EntityType="Self.HistoricoRegistro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registro" EntityType="Self.Registro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegistroApp" EntityType="Self.RegistroApp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegistroEventos" EntityType="Self.RegistroEventos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiciosInteres" EntityType="Self.ServiciosInteres" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_HistoricoRegistro_ctStatusRegistro" Association="Self.FK_HistoricoRegistro_ctStatusRegistro">
@@ -225,8 +234,7 @@
             <End Role="ServiciosInteres" EntitySet="ServiciosInteres" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_9F97CF_BodySystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -465,7 +473,16 @@
             <End Role="Registro" EntitySet="Registro" />
             <End Role="ServiciosInteres" EntitySet="ServiciosInteres" />
           </AssociationSet>
+          <EntitySet Name="RegistroApp" EntityType="DB_9F97CF_BodySystemModel.RegistroApp" />
         </EntityContainer>
+        <EntityType Name="RegistroApp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" />
+          <Property Name="key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -557,6 +574,15 @@
               <MappingFragment StoreEntitySet="ServiciosInteres">
                 <ScalarProperty Name="IdServiciosInteres" ColumnName="IdServiciosInteres" />
                 <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegistroApp">
+            <EntityTypeMapping TypeName="DB_9F97CF_BodySystemModel.RegistroApp">
+              <MappingFragment StoreEntitySet="RegistroApp">
+                <ScalarProperty Name="key" ColumnName="key" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

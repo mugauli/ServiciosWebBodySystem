@@ -243,6 +243,9 @@
     <Compile Include="Datos\Registro.cs">
       <DependentUpon>BodySystemDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\RegistroApp.cs">
+      <DependentUpon>BodySystemDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Datos\RegistroData.cs" />
     <Compile Include="Datos\RegistroEventos.cs">
       <DependentUpon>BodySystemDB.tt</DependentUpon>
@@ -265,6 +268,7 @@
     <Compile Include="DTO\NoRegistros.cs" />
     <Compile Include="DTO\PaisDTO.cs" />
     <Compile Include="DTO\PaseDTO.cs" />
+    <Compile Include="DTO\RegistroAppDTO.cs" />
     <Compile Include="DTO\RegistroDTO.cs" />
     <Compile Include="DTO\RegistroEventosDTO.cs" />
     <Compile Include="DTO\RegistroReportDTO.cs" />

@@ -155,7 +155,7 @@ namespace ServiciosWebBodySystem.Datos
         /// <returns></returns>
         public List<RegistroDTO> GetRegistroByfiltro(int Registro, string Nombre, string ApPaterno, string ApMaterno, string Email, int Estado, int Pase)
         {
-            var registroLts = new List<Registro>();
+
             try
             {
                 using (var context = new BodySystemDBEntities())
@@ -168,6 +168,102 @@ namespace ServiciosWebBodySystem.Datos
                                                                           (x.IdEstatus == Estado || Estado == 0) &&
                                                                           (x.IdTipoPase == Pase || Pase == 0)
                                                        ).ToList());
+                    return resp;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        public bool ExistsRegistro(int Registro, string key)
+        {
+
+            try
+            {
+                using (var context = new BodySystemDBEntities())
+                {
+                    var resp = context.RegistroApp.Where(x => x.IdRegistro == Registro && x.key == key).ToList().Count;
+                    return resp > 0;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        public bool SaveRegistro(int Registro, string key)
+        {
+
+            try
+            {
+                using (var context = new BodySystemDBEntities())
+                {
+
+                    var resp = context.RegistroApp.Add(new RegistroApp { IdRegistro = Registro, key = key });
+                    context.SaveChanges();
+                }
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
+
+
+        }
+
+        public List<RegistroDTO> GetRegistroByfiltro2(int Registro, string Nombre, string ApPaterno, string ApMaterno, string Email, string Empresa)
+        {
+
+            try
+            {
+                using (var context = new BodySystemDBEntities())
+                {
+                    var resp = MapeoRegistro(context.Registro.Where(x => (x.IdRegistro == Registro || Registro == 0) &&
+                                                                          (x.Email.Contains(Email) || String.IsNullOrEmpty(Email)) &&
+                                                                          (x.Nombre.Contains(Nombre) || String.IsNullOrEmpty(Nombre)) &&
+                                                                          (x.ApellidoPaterno.Contains(ApPaterno) || String.IsNullOrEmpty(ApPaterno)) &&
+                                                                          (x.ApellidoMaterno.Contains(ApMaterno) || String.IsNullOrEmpty(ApMaterno)) &&
+                                                                          (x.Empresa.Contains(Empresa) || String.IsNullOrEmpty(Empresa))
+                                                       ).ToList());
+                    return resp;
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
+
+        public List<RegistroDTO> GetRegistroBykey(string key)
+        {
+
+            try
+            {
+                using (var context = new BodySystemDBEntities())
+                {
+                    var resp = MapeoRegistro(context.Registro
+                                                    .Join(context.RegistroApp,a => a.IdRegistro,b => b.IdRegistro,(a, b) => new { A = a, B = b })
+                                                        .Where(x => x.B.key == key)
+                                                        .Select(x => x.A)
+                                                        .ToList());
                     return resp;
                 }
 
@@ -504,7 +600,7 @@ namespace ServiciosWebBodySystem.Datos
 
             foreach (var item in eventos)
             {
-                
+
                 result.Append(item.NombreEvento);
                 result.Append(" | ");
             }

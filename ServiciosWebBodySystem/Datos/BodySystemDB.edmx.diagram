@@ -21,6 +21,7 @@
         <AssociationConnector Association="DB_9F97CF_BodySystemModel.FK_Registro_Pais" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9F97CF_BodySystemModel.FK_RegistroEventos_Registro" ManuallyRouted="false" />
         <AssociationConnector Association="DB_9F97CF_BodySystemModel.FK_ServiciosInteres_Registro" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DB_9F97CF_BodySystemModel.RegistroApp" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

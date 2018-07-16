@@ -218,7 +218,6 @@ namespace ServiciosWebBodySystem
 
             if (eventoAgotado) return "Uno o más eventos seleccionados ha excedido cupo límite para el evento." + debug;
 
-
             var response = _gdRegistro.GuardarRegistro(reg, ltsServicios, ltsEventos);
 
             int idRegistro = 0;
